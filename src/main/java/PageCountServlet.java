@@ -3,23 +3,30 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 
-
-@WebServlet(name = "HelloWorldServlet", urlPatterns = "/hello-world")
-public class HelloWorldServlet extends HttpServlet {
+@WebServlet(name = "PageCountServlet", urlPatterns = "/count")
+public class PageCountServlet extends HttpServlet {
+    private int counter = 0;
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String name = request.getParameter("name");
-        System.out.println("Hey dumb ass.  You did it!");
+
         response.setContentType("text/html");
         PrintWriter output = response.getWriter();
-        output.println("<h1>What up " + name + "?</h1><hr>");
+        output.println("<h1>page counter: " + counter + "</h1>");
+        counter++;
+        String reset = request.getParameter("reset");
+        if (reset.equalsIgnoreCase("reset")) {
+            counter = 0;
+        }
+
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String email = request.getParameter("email");
-        PrintWriter output = response.getWriter();
-        output.println("this is your email: " + email);
-    }
 
-}//end of class
+
+
+    }
+}
